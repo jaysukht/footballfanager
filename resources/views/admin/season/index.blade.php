@@ -30,25 +30,17 @@
     </div>
     <div class="filter-top-sec request-wrapper">
         <div class="manageuser">
-            <a href="{{ route('admin.leagues.create') }}" class="btn common-btn">Add</a>
+            <a href="{{ route('admin.seasons.create') }}" class="btn common-btn">Add</a>
         </div>
     </div>
     
     <div class="dashboard-table-sec oddeven-table search-mt">
-        <table id="league-table" class="display table responsive nowrap" width="100%">
+        <table id="season-table" class="display table responsive nowrap" width="100%">
             <thead>
                 <tr>
                     <th>#ID</th>
-                    <th>League</th>
+                    <th>Season</th>
                     <th>Status</th>
-                    <th>
-                        @foreach ($languages as $language)
-                            <img src="{{ asset('assets/images/language_flags/' . $language->lang_flag) }}" 
-                                 alt="{{ $language->fullname }}" 
-                                 title="{{ $language->fullname }}" 
-                                 style="width: 30px; height: 20px; margin: 3px; border-radius: 3px; cursor: pointer;">
-                        @endforeach
-                    </th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -69,22 +61,24 @@
     <script src="{{ asset('assets/js/message.js') }}"></script>
     <script>
         $(document).ready(function() {
-            var table = $('#league-table').DataTable({
+            var table = $('#season-table').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
                 autoWidth: false, //  IMPORTANT (fix cloneNode issue)
                 pageLength: 20,
                 ajax: {
-                    url: '{{ route('admin.leagues.data') }}',
+                    url: '{{ route('admin.seasons.data') }}',
                     dataType: 'json',
                     data: function(d) {
                         d.filter_language = $('#filter_language').val();
                     }
                 },
-                columns: [{
+                columns: [
+                    {
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        hidden: true
                     },
                     {
                         data: 'name',
@@ -93,12 +87,6 @@
                     {
                         data: 'status',
                         name: 'status',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'languages',
-                        name: 'languages',
                         orderable: false,
                         searchable: false
                     },
@@ -145,7 +133,8 @@
             $(document).on('click', '.delete-record', function() {
                 let $btn = $(this);
                 let deleteid = $('.delete-record-id').val();
-                let url = "{{ route('admin.leagues.delete') }}";
+                console.log(deleteid);
+                let url = "{{ route('admin.seasons.delete') }}";
                 let $loader = $btn.find('.loader-ajax');
                 $loader.removeClass('d-none');
                 $btn.prop('disabled', true);

@@ -30,7 +30,7 @@
     </div>
     <div class="filter-top-sec request-wrapper">
         <div class="manageuser">
-            <a href="{{ route('admin.leagues.create') }}" class="btn common-btn">Add</a>
+            <a href="{{ route('admin.rounds.create') }}" class="btn common-btn">Add</a>
         </div>
     </div>
     
@@ -39,8 +39,7 @@
             <thead>
                 <tr>
                     <th>#ID</th>
-                    <th>League</th>
-                    <th>Status</th>
+                    <th>Round name</th>
                     <th>
                         @foreach ($languages as $language)
                             <img src="{{ asset('assets/images/language_flags/' . $language->lang_flag) }}" 
@@ -76,7 +75,7 @@
                 autoWidth: false, //  IMPORTANT (fix cloneNode issue)
                 pageLength: 20,
                 ajax: {
-                    url: '{{ route('admin.leagues.data') }}',
+                    url: '{{ route('admin.rounds.data') }}',
                     dataType: 'json',
                     data: function(d) {
                         d.filter_language = $('#filter_language').val();
@@ -87,14 +86,8 @@
                         name: 'id'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
-                    },
-                    {
-                        data: 'status',
-                        name: 'status',
-                        orderable: false,
-                        searchable: false
+                        data: 'tag_name',
+                        name: 'tag_name'
                     },
                     {
                         data: 'languages',
@@ -145,7 +138,7 @@
             $(document).on('click', '.delete-record', function() {
                 let $btn = $(this);
                 let deleteid = $('.delete-record-id').val();
-                let url = "{{ route('admin.leagues.delete') }}";
+                let url = "{{ route('admin.rounds.delete') }}";
                 let $loader = $btn.find('.loader-ajax');
                 $loader.removeClass('d-none');
                 $btn.prop('disabled', true);

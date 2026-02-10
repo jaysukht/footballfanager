@@ -60,17 +60,42 @@
                                 <i class="bi bi-map "></i> Countries
                             </a>
                         </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.languages.index') }}"
-                                    class="nav-link text-white{{ request()->is('admin/languages') ? ' active' : '' }}">
-                                    <i class="bi bi-globe "></i> Languages
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.leagues.index') }}"
-                                    class="nav-link text-white{{ request()->is('admin/leagues') ? ' active' : '' }}">
-                                    <i class="bi bi-bar-chart "></i> Leagues
-                                </a>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.languages.index') }}"
+                                class="nav-link text-white{{ request()->is('admin/languages') ? ' active' : '' }}">
+                                <i class="bi bi-globe "></i> Languages
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.leagues.index') }}"
+                                class="nav-link text-white{{ request()->is('admin/leagues') ? ' active' : '' }}">
+                                <i class="bi bi-bar-chart "></i> Leagues
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.seasons.index') }}"
+                                class="nav-link text-white{{ request()->is('admin/season*') ? ' active' : '' }}">
+                                <i class="bi bi-bar-chart "></i> Seasons
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.teams.index') }}"
+                                class="nav-link text-white{{ request()->is('admin/team*') ? ' active' : '' }}">
+                                <i class="bi bi-bar-chart "></i> Teams
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.rounds.index') }}"
+                                class="nav-link text-white{{ request()->is('admin/rounds*') ? ' active' : '' }}">
+                                <i class="bi bi-bar-chart "></i> Rounds
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.matches.index') }}"
+                                class="nav-link text-white{{ request()->is('admin/matches*') ? ' active' : '' }}">
+                                <i class="bi bi-bar-chart "></i> Matches
+                            </a>
+                        </li>
                     </ul>
 
                 </div>

@@ -6,7 +6,7 @@
         @if (session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
-        <form class="form-section formboxbg" id="form-league" method="POST" action="{{ route('admin.leagues.update', [$league->id, $language_id, $default_language_post_id]) }}" enctype="multipart/form-data">
+        <form class="form-section formboxbg" id="form-league" method="POST" action="{{ route('admin.sub-league.store', [$league->id, $language_id]) }}" enctype="multipart/form-data">
             @csrf
             <div class="header-cls-disp">
                 <div class="service-id-cls">
@@ -127,7 +127,7 @@
                                 </circle>
                             </svg></button>
                         <div class="back-service-footer">
-                            <a href="{{ route('admin.leagues.index') }}" class="back-btn">Back</a>
+                            <a href="{{ route('admin.countries.index') }}" class="back-btn">Back</a>
                         </div>
                     </div>
                 </div>

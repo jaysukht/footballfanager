@@ -7,7 +7,7 @@
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
         <form class="form-section formboxbg" id="form-country" method="POST"
-            action="{{ route('admin.countries.update', $country->id) }}" enctype="multipart/form-data">
+            action="{{ route('admin.countries.update', [$country->id, $language_id, $default_language_post_id]) }}" enctype="multipart/form-data">
             @csrf
 
             <div class="header-cls-disp">
@@ -53,7 +53,7 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="input-group">
+                <!-- <div class="input-group">
                     <label class="form-label">Language : <span>*</span></label>
                     <select class="form-select language_id" id="language_id" name="language_id">
                         <option value="">Select Language</option>
@@ -68,7 +68,7 @@
                     @error('language_id')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                </div>
+                </div> -->
                 <div class="input-group">
                     <label class="form-label">Description : </label>
                     <textarea class="form-control description" id="description" name="description" placeholder="Country Description">{{ old('description', $country->description) }}</textarea>
@@ -105,6 +105,7 @@
                         <div class="mb-3">
                             <img src="{{ asset('assets/images/country_flags/' . $country->country_flag) }}" width="100">
                         </div>
+                        <input type="hidden" name="existing_path" value="{{$country->country_flag}}">
                     @endif
 
                 </div>

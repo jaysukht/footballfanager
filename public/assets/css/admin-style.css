@@ -388,7 +388,7 @@ table.dataTable.no-footer {
 
 .dataTable .btn-sm {
     border-color: #526179;
-    background-color: #526179;
+    background-color: white;
     /* color: #000; */
     font-size: 12px;
     font-weight: 500;

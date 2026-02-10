@@ -6,21 +6,23 @@
         @if (session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
-        <form class="form-section formboxbg" id="form-league" method="POST" action="{{ route('admin.leagues.update', [$league->id, $language_id, $default_language_post_id]) }}" enctype="multipart/form-data">
+        <form class="form-section formboxbg" id="form-country" method="POST"
+            action="{{ route('admin.sub-country.store', [$country->id, $language_id]) }}" enctype="multipart/form-data">
             @csrf
+
             <div class="header-cls-disp">
                 <div class="service-id-cls">
                 </div>
                 <div class="backburron">
-                    <a href="{{ route('admin.leagues.index') }}" class="back-btn">Back</a>
+                    <a href="{{ route('admin.countries.index') }}" class="back-btn">Back</a>
                 </div>
             </div>
             <div class="mainform-sec">
                 <div class="input-group">
                     <label class="form-label">Name : <span>*</span></label>
                     <input type="text" class="form-control name" id="name" name="name"
-                        value="{{ old('name', $league->name) }}" placeholder="League Name">
-                    <span class="admin-error-msg league-name-error">Please complete this field</span>
+                        value="{{ old('name', $country->name) }}" placeholder="Country Name">
+                    <span class="admin-error-msg country-name-error">Please complete this field</span>
                     @error('name')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -28,69 +30,44 @@
                 <div class="input-group">
                     <label class="form-label">Slug : <span>*</span></label>
                     <input type="text" class="form-control slug" id="slug" name="slug"
-                        value="{{ old('slug', $league->slug) }}" placeholder="League Slug">
-                    <span class="admin-error-msg league-slug-error">Please complete this field</span>
+                        value="{{ old('slug', $country->slug) }}" placeholder="Country Slug">
+                    <span class="admin-error-msg country-slug-error">Please complete this field</span>
                     @error('slug')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                
+                <div class="input-group">
+                    <label class="form-label">Country Code : <span>*</span></label>
+                    <input type="text" class="form-control country_code" id="country_code" name="country_code"
+                        value="{{ old('country_code', $country->country_code) }}" placeholder="Country Code">
+                    <span class="admin-error-msg country-code-error">Please complete this field</span>
+                    @error('country_code')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
                 <div class="input-group">
                     <label class="form-label">Custom Permalink :</label>
-                    <input type="text" class="form-control custom_permalink" id="custom_permalink" name="custom_permalink"
-                        value="{{ old('custom_permalink', $league->custom_permalink) }}" placeholder="Custom Permalink">
+                    <input type="text" class="form-control custom_permalink" id="custom_permalink"  name="custom_permalink"
+                        value="{{ old('custom_permalink', $country->custom_permalink) }}" placeholder="Custom Permalink">
                     @error('custom_permalink')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                
-                <!-- <div class="input-group">
-                    <label class="form-label">Language : <span>*</span></label>
-                    <select class="form-select language_id" id="language_id" name="language_id">
-                        <option value="">Select Language</option>
-                        @foreach ($languages as $language)
-                            <option value="{{ $language['id'] }}"
-                                {{ old('language_id', $league->language_id) == $language['id'] ? 'selected' : '' }}>
-                                {{ $language['fullname'] }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <span class="admin-error-msg country-language-error">Please complete this field</span>
-                    @error('language_id')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div> -->
-                  <div class="input-group">
-                    <label class="form-label">Country : <span>*</span></label>
-                    <select class="form-select country_id" id="country_id" name="country_id">
-                        <option value="">Select Country</option>
-                        @foreach ($countries as $country)
-                            <option value="{{ $country['id'] }}"
-                                {{ old('country_id', $league->country_id) == $country['id'] ? 'selected' : '' }}>
-                                {{ $country['name'] }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <span class="admin-error-msg country-id-error">Please complete this field</span>
-                    @error('country_id')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
                 <div class="input-group">
-                    <label class="form-label">Description :</label>
-                    <textarea class="form-control description" id="description" name="description" placeholder="League Description">{{ old('description', $league->description) }}</textarea>
-                    <span class="admin-error-msg league-description-error">Please complete this field</span>
-                    
+                    <label class="form-label">Description : </label>
+                    <textarea class="form-control description" id="description" name="description" placeholder="Country Description">{{ old('description', $country->description) }}</textarea>
+                    <span class="admin-error-msg country-description-error">Please complete this field</span>
+
                 </div>
                 <div class="input-group">
                     <label class="form-label">Status : <span>*</span></label>
                     <div>
                         <div class="radio-group">
                             <input class="form-check-input" type="radio" name="status" id="active" value="1"
-                                {{ old('status', $league->status) == '1' ? 'checked' : '' }}>
+                                {{ old('status', $country->status) == '1' ? 'checked' : '' }}>
                             <label class="form-check-label" for="active">Active</label>
                             <input class="form-check-input" type="radio" name="status" id="deactive" value="0"
-                                {{ old('status', $league->status) == '0' ? 'checked' : '' }}>
+                                {{ old('status', $country->status) == '0' ? 'checked' : '' }}>
                             <label class="form-check-label" for="deactive">Deactive</label>
                         </div>
                     </div>
@@ -100,19 +77,19 @@
                     @enderror
                 </div>
                 <div class="input-group">
-                    <label class="form-label">League flag :</label>
-                    <input type="file" class="form-control league_flag" id="league_flag" name="league_flag"
-                        value="{{ old('league_flag') }}" placeholder="League Flag">
-                    <span class="admin-error-msg league-flag-error">Please complete this field</span>
-                    @error('league_flag')
+                    <label class="form-label">Country flag :</label>
+                    <input type="file" class="form-control country_flag" id="country_flag" name="country_flag"
+                        value="{{ old('country_flag') }}" placeholder="Country Flag">
+                    <span class="admin-error-msg country-flag-error">Please complete this field</span>
+                    @error('country_flag')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                     {{-- Show existing flag --}}
-                    @if ($league->league_flag)
+                    @if ($country->country_flag)
                         <div class="mb-3">
-                            <img src="{{ asset('assets/images/league_flags/' . $league->league_flag) }}" width="100">
+                            <img src="{{ asset('assets/images/country_flags/' . $country->country_flag) }}" width="100">
                         </div>
-                        <input type="hidden" name="existing_flag" value="{{$league->league_flag}}">
+                        <input type="hidden" name="existing_path" value="{{$country->country_flag}}">
                     @endif
 
                 </div>
@@ -120,14 +97,15 @@
                     <div class="clsbottombuttons">
                         <button type="submit" class="btn btn-primary submit-language">Save Changes <svg
                                 class="loader-ajax d-none" width="40" height="40" viewBox="0 0 50 50">
-                                <circle cx="25" cy="25" r="20" fill="none" stroke="#fff" stroke-width="4"
-                                    stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="75">
+                                <circle cx="25" cy="25" r="20" fill="none" stroke="#fff"
+                                    stroke-width="4" stroke-linecap="round" stroke-dasharray="100"
+                                    stroke-dashoffset="75">
                                     <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite"
                                         dur="1s" from="0 25 25" to="360 25 25" />
                                 </circle>
                             </svg></button>
                         <div class="back-service-footer">
-                            <a href="{{ route('admin.leagues.index') }}" class="back-btn">Back</a>
+                            <a href="{{ route('admin.countries.index') }}" class="back-btn">Back</a>
                         </div>
                     </div>
                 </div>

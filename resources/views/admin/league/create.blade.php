@@ -119,7 +119,7 @@
                                 </circle>
                             </svg></button>
                         <div class="back-service-footer">
-                            <a href="{{ route('admin.countries.index') }}" class="back-btn">Back</a>
+                            <a href="{{ route('admin.leagues.index') }}" class="back-btn">Back</a>
                         </div>
                     </div>
                 </div>

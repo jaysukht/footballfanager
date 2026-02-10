@@ -54,6 +54,14 @@
                     <th>Country</th>
                     <th>Code</th>
                     <th>Status</th>
+                    <th>
+                        @foreach ($languages as $language)
+                            <img src="{{ asset('assets/images/language_flags/' . $language->lang_flag) }}" 
+                                 alt="{{ $language->fullname }}" 
+                                 title="{{ $language->fullname }}" 
+                                 style="width: 30px; height: 20px; margin: 3px; border-radius: 3px; cursor: pointer;">
+                        @endforeach
+                    </th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -102,6 +110,12 @@
                     {
                         data: 'status',
                         name: 'status',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'languages',
+                        name: 'languages',
                         orderable: false,
                         searchable: false
                     },

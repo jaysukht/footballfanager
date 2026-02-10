@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Season extends Model
+class MatchTeamLineUp extends Model
 {
     //
-    protected $table = 'seasons';
+
+    protected $table = 'match_team_line_up';
     protected $guarded = [];
 }
