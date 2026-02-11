@@ -492,6 +492,117 @@
             </div>
             <!--  -->
 
+
+            <!-- Head to Head (Recent Matches) -->
+            <div class="input-group w-100">
+
+                <label class="form-label">Head to Head (Recent Matches)</label>
+
+                <div id="h2h-wrapper" class="w-100">
+
+                    <!-- Default Row -->
+                    <div class="h2h-item form-section formboxbg">
+
+                        <div class="d-flex align-items-center gap-3 w-100">
+
+                            <!-- Goals -->
+                            <input type="text"
+                                class="form-control"
+                                name="head_to_head[0][goals]"
+                                placeholder="Goals (e.g. 2-1)">
+
+                            <!-- Date -->
+                            <input type="date"
+                                class="form-control"
+                                name="head_to_head[0][date]">
+
+                            <!-- League -->
+                            <input type="text"
+                                class="form-control"
+                                name="head_to_head[0][league]"
+                                placeholder="League Name">
+
+                            <!-- Remove -->
+                            <button type="button"
+                                    class="btn btn-danger remove-h2h">
+                                Remove
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Add Button -->
+                <button type="button"
+                        id="add-h2h"
+                        class="btn btn-primary mt-2">
+                    Add Head-to-Head Match
+                </button>
+
+            </div>
+            <!--  -->
+
+
+            <!-- Tv Channels by country -->
+            <div class="input-group w-100">
+                <label class="form-label">TV Channels by Country</label>
+
+                @foreach($countries as $country)
+
+                <div class="country-section form-section formboxbg mb-4">
+
+                    <label class="form-label fw-bold">
+                        {{ $country->name }}
+                    </label>
+
+                    <div class="channels-wrapper"
+                        data-country="{{ $country->id }}">
+
+                        <div class="channel-row d-flex gap-2 mb-2">
+
+                            <input type="text"
+                                class="form-control"
+                                name="channels[{{ $country->id }}][0][channel_id]"
+                                placeholder="Channel ID">
+
+                            <input type="text"
+                                class="form-control"
+                                name="channels[{{ $country->id }}][0][channel_name]"
+                                placeholder="Channel Name">
+
+                            <input type="number"
+                                class="form-control"
+                                name="channels[{{ $country->id }}][0][yes_votes]"
+                                placeholder="Yes Votes">
+
+                            <input type="number"
+                                class="form-control"
+                                name="channels[{{ $country->id }}][0][no_votes]"
+                                placeholder="No Votes">
+
+                            <button type="button"
+                                class="btn btn-danger remove-channel">
+                                Remove
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <button type="button"
+                        class="btn btn-primary add-channel"
+                        data-country="{{ $country->id }}">
+                        Add Channel
+                    </button>
+
+                </div>
+
+                @endforeach
+            </div>
+            <!--  -->
+
             <div class="input-group  w-100">
                 <div class="clsbottombuttons">
                     <button type="submit" class="btn btn-primary submit-language">Save Changes <svg
@@ -515,6 +626,7 @@
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <script>
+// injured player
 $(document).ready(function () {
 
     let injuredIndex = {
@@ -580,7 +692,7 @@ $(document).ready(function () {
     });
 
 });
-
+// 
 
 // Formation of team
 let playerIndex = 0;
@@ -636,6 +748,109 @@ $(document).on("click", ".add-player", function () {
 $(document).on("click", ".remove-player", function () {
     $(this).closest(".player-item").remove();
 });
+// 
+
+
+//head-to-head matches
+$(document).ready(function(){
+
+    let h2hIndex = 1;
+
+    $('#add-h2h').click(function(){
+
+        let html = `
+        <div class="h2h-item form-section formboxbg">
+
+            <div class="d-flex align-items-center gap-3 w-100">
+
+                <input type="text"
+                       class="form-control"
+                       name="head_to_head[${h2hIndex}][goals]"
+                       placeholder="Goals (e.g. 2-1)">
+
+                <input type="date"
+                       class="form-control"
+                       name="head_to_head[${h2hIndex}][date]">
+
+                <input type="text"
+                       class="form-control"
+                       name="head_to_head[${h2hIndex}][league]"
+                       placeholder="League Name">
+
+                <button type="button"
+                        class="btn btn-danger remove-h2h">
+                    Remove
+                </button>
+
+            </div>
+
+        </div>
+        `;
+
+        $('#h2h-wrapper').append(html);
+
+        h2hIndex++;
+
+    });
+
+    $(document).on('click', '.remove-h2h', function(){
+        $(this).closest('.h2h-item').remove();
+    });
+
+});
+// 
+
+// tv channels
+$(document).on('click', '.add-channel', function () {
+
+    let country_id = $(this).data('country');
+
+    let wrapper = $(this).closest('.country-section')
+                         .find('.channels-wrapper');
+
+    let index = wrapper.children('.channel-row').length;
+
+    let row = `
+    <div class="channel-row d-flex gap-2 mb-2">
+
+        <input type="text"
+            class="form-control"
+            name="channels[${country_id}][${index}][channel_id]"
+            placeholder="Channel ID">
+
+        <input type="text"
+            class="form-control"
+            name="channels[${country_id}][${index}][channel_name]"
+            placeholder="Channel Name">
+
+        <input type="number"
+            class="form-control"
+            name="channels[${country_id}][${index}][yes_votes]"
+            placeholder="Yes Votes">
+
+        <input type="number"
+            class="form-control"
+            name="channels[${country_id}][${index}][no_votes]"
+            placeholder="No Votes">
+
+        <button type="button"
+            class="btn btn-danger remove-channel">
+            Remove
+        </button>
+
+    </div>`;
+
+    wrapper.append(row);
+
+});
+
+
+$(document).on('click', '.remove-channel', function () {
+
+    $(this).closest('.channel-row').remove();
+
+});
+// 
 
 </script>
 @endscript

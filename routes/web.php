@@ -12,7 +12,6 @@ use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
 
-
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('/admin/dashboard');
@@ -96,6 +95,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/matches/data', [MatchController::class, 'data'])->name('matches.data');
         Route::get('/matches/create', [MatchController::class, 'create'])->name('matches.create');
         Route::post('/matches/create', [MatchController::class, 'store'])->name('matches.store');
+        Route::get('/matches/edit/{id}/{language_id}/{default_language_post_id}', [MatchController::class, 'edit'])->name('matches.edit');
+        Route::get('/matches/add/{id}/{language_id}', [MatchController::class, 'addSubRound'])->name('sub-match.add');
         Route::post('/matches/delete', [MatchController::class, 'delete'])->name('matches.delete');
     });
 });

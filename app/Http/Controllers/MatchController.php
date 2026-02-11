@@ -11,6 +11,8 @@ use App\Models\Country;
 use App\Models\Matches;
 use Illuminate\Http\Request;
 use App\Models\LanguageMaster;
+use App\Models\MatchTvChannel;
+use App\Models\MatchHeadToHead;
 use App\Models\MatchTeamLineUp;
 use App\Models\MatchInjuredPlayer;
 
@@ -52,7 +54,7 @@ class MatchController extends Controller
                 if ($translation) {
 
                     // EDIT button
-                    $url = route('admin.teams.edit', [
+                    $url = route('admin.matches.edit', [
                         'id' => $translation->id,
                         'language_id' => $language->id,
                         'default_language_post_id' => $translation->default_language_post_id,
@@ -69,7 +71,7 @@ class MatchController extends Controller
                 } else {
 
                     // ADD button
-                    $url = route('admin.sub-team.add', [
+                    $url = route('admin.sub-match.add', [
                         'id' => $match->id,
                         'language_id' => $language->id,
                     ]);                       
@@ -143,11 +145,14 @@ class MatchController extends Controller
             'divan_matchid' => $request->divan_matchid,
             'divanscore_home_id' => $request->divanscore_home_id,
             'divanscore_away_id' => $request->divanscore_away_id,
+            'divanscore_tournament_id' => $request->divanscore_tournament_id,
             'divanscore_season_id' => $request->divanscore_season_id,
             'match_date' => Carbon::parse($request->match_date)->format('Y-m-d'),
             'match_time' => Carbon::parse($request->match_time)->format('H:i:s'),
             'referee_name' => $request->referee_name,
             'venue_name' => $request->venue_name,
+            'city_name' => $request->city_name,
+            'match_result' => $request->match_result,
             'match_homeresult' => $request->match_homeresult,
             'match_awayresult' => $request->match_awayresult,
             'match_team_players_team1_formation' => $request->match_team_players_team1_formation,
@@ -198,6 +203,54 @@ class MatchController extends Controller
             }
         }
 
+        if ($request->head_to_head) {
+            foreach ($request->head_to_head as $match_head) {
+
+                MatchHeadToHead::create([
+                    'match_id' => $match->id,
+                    'goals'  => $match_head['goals'],
+                    'date'   => Carbon::parse($match_head['date'])->format('Y-m-d'),
+                    'league' => $match_head['league'],
+                    'language_id' => $match->language_id
+                ]);
+
+            }
+        }
+
+
+        foreach ($request->channels as $country_id => $channels)
+        {
+            foreach ($channels as $channel)
+            {
+                MatchTvChannel::create([
+                    'match_id'     => $match->id,
+                    'country_id'   => $country_id,
+                    'channel_id'   => $channel['channel_id'],
+                    'channel_name' => $channel['channel_name'],
+                    'yes_votes'    => $channel['yes_votes'] ?? 0,
+                    'no_votes'     => $channel['no_votes'] ?? 0,
+                    'language_id'  => $match->language_id
+                ]);
+
+            }
+        }
+
         return redirect()->route('admin.matches.index')->with('success', 'Match Created Successfully');
+    }
+
+    public function edit($id, $language_id, $default_language_post_id)
+    {
+        $match = Matches::with('injured_players')->findOrFail($id);
+        $language = LanguageMaster::where('id', $language_id)->first();
+        $pageTitle = 'Edit '. $match->post_title .' - '.$language->fullname.' language';
+        // group by team (1 = home, 2 = away)
+        $injuredPlayers = $match->injured_players->groupBy('team');
+        $leagues = League::where('status', 1)->get();
+        $seasons = Season::where('status', 1)->get();
+        $languages = LanguageMaster::where('status', 1)->get();
+        $roundes = Round::get(['id', 'tag_name']);
+        $teams = Team::get(['id', 'post_title']);
+        $countries = Country::where('status', 1)->get();
+        return view('admin.match.edit', compact('pageTitle', 'match', 'injuredPlayers', 'language_id', 'default_language_post_id', 'leagues', 'seasons', 'languages', 'roundes', 'teams', 'countries'));
     }
 }
