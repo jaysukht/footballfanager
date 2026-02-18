@@ -1,0 +1,15 @@
+type League {
+    id: ID!
+    language_id: ID
+    country_id: ID
+    name: String!
+    slug: String!
+    custom_permalink: String
+    visit: Int!
+    league_flag: String!
+    description: String
+    status: Boolean!
+    created_at: DateTime
+    updated_at: DateTime
+    country: Country @belongsTo
+}

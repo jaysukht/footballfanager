@@ -1,0 +1,7 @@
+extend type Query {
+    leagues(
+        country_id: ID
+        status: Boolean
+    ): [League!]!
+      @field(resolver: "App\\GraphQL\\Resolvers\\LeagueResolver@list")
+}

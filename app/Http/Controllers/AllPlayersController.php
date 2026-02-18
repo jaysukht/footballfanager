@@ -20,25 +20,25 @@ class AllPlayersController extends Controller
 
     public function data()
     {
-        $league_lists = PlayerMaster::where('default_language_post_id', 0)->get();
+        $player_lists = PlayerMaster::where('default_language_post_id', 0)->get();
         $languages = LanguageMaster::all();
         
-        return datatables()->of($league_lists)
-        ->editColumn('league_id', function($league_list) {
-            return $league_list->league ? $league_list->league->name : 'N/A';
+        return datatables()->of($player_lists)
+        ->editColumn('league_id', function($player_list) {
+            return $player_list->league ? $player_list->league->name : 'N/A';
         })
-        ->editColumn('season_id', function($league_list) {
-            return $league_list->season ? $league_list->season->name : 'N/A';
+        ->editColumn('season_id', function($player_list) {
+            return $player_list->season ? $player_list->season->name : 'N/A';
         })
-        ->addColumn('languages', function ($league_list) use ($languages) {
+        ->addColumn('languages', function ($player_list) use ($languages) {
 
             $buttons = '';
             foreach ($languages as $language) {
 
                 $translation = PlayerMaster::where('language_id', $language->id)
-                    ->where(function ($query) use ($league_list) {
-                        $query->where('id', $league_list->id)
-                            ->orWhere('default_language_post_id', $league_list->id);
+                    ->where(function ($query) use ($player_list) {
+                        $query->where('id', $player_list->id)
+                            ->orWhere('default_language_post_id', $player_list->id);
                     })
                     ->first();
 
@@ -63,7 +63,7 @@ class AllPlayersController extends Controller
 
                     // ADD button
                     $url = route('admin.sub-all-players.add', [
-                        'id' => $league_list->id,
+                        'id' => $player_list->id,
                         'language_id' => $language->id,
                     ]);                       
 
@@ -81,11 +81,11 @@ class AllPlayersController extends Controller
 
             return $buttons;
         })
-        ->addColumn('action', function ($league_list) {
+        ->addColumn('action', function ($player_list) {
             $buttons = '
                 <br>
                 <a href="javascript:void(0)" 
-                data-deleteid="'.$league_list->id.'"
+                data-deleteid="'.$player_list->id.'"
                 class="btn btn-sm btn-danger show-remove-modal">
                 Delete All
                 </a>

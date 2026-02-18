@@ -9,6 +9,7 @@ use App\Http\Controllers\LeagueListController;
 use App\Http\Controllers\MatchController;
 use App\Http\Controllers\RoundController;
 use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\StatTypeController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -124,6 +125,18 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/sub-all-players/add/{id}/{language_id}', [AllPlayersController::class, 'addSubAllPlayers'])->name('sub-all-players.add');
         Route::post('/sub-all-players/store/{id}/{language_id}', [AllPlayersController::class, 'storeSubAllPlayers'])->name('sub-all-players.store');
         Route::post('/all-players/delete', [AllPlayersController::class, 'delete'])->name('all-players.delete');
+
+        //Stat Type
+        Route::get('/stat-type', [StatTypeController::class, 'index'])->name('stat-type.index');
+        Route::get('/stat-type/data', [StatTypeController::class, 'data'])->name('stat-type.data');
+        Route::get('/stat-type/create', [StatTypeController::class, 'create'])->name('stat-type.create');
+        Route::post('/stat-type/store', [StatTypeController::class, 'store'])->name('stat-type.store');
+        Route::get('/stat-type/edit/{id}/{language_id}/{default_language_post_id}', [StatTypeController::class, 'edit'])->name('stat-type.edit');
+        Route::post('/stat-type/update/{id}/{language_id}/{default_language_post_id}', [StatTypeController::class, 'update'])->name('stat-type.update');
+        Route::get('/sub-stat-type/add/{id}/{language_id}', [StatTypeController::class, 'addSubStatType'])->name('sub-stat-type.add');
+        Route::post('/sub-stat-type/store/{id}/{language_id}', [StatTypeController::class, 'storeSubStatType'])->name('sub-stat-type.store');
+        Route::post('/stat-type/delete', [StatTypeController::class, 'delete'])->name('stat-type.delete');
+
 
     });
 });

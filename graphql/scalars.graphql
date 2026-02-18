@@ -1,0 +1,6 @@
+"A datetime string with format Y-m-d H:i:s"
+scalar DateTime
+    @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+scalar Email
+    @scalar(class: "App\\GraphQL\\Scalars\\EmailScalar")
