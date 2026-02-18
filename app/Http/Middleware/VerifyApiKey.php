@@ -15,7 +15,7 @@ class VerifyApiKey
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->header('x-api-key') !== 'abc123') {
+        if ($request->header('x-api-key') !== '9X1qBtfyMAgF@9X1qBtfyMAgF@') {
             return response()->json([
                 'errors' => [['message' => 'Invalid API Key']]
             ], 401);

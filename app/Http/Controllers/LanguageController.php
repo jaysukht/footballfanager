@@ -130,7 +130,7 @@ class LanguageController extends Controller
                        Delete
                     </a>
                     <a href="' . route('admin.languages.edit', $row->id) . '" 
-                       class="btn btn-sm btn-primary">
+                       class="btn btn-sm btn-primary orange-bg">
                        Edit
                 ';
             })

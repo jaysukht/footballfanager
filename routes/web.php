@@ -1,16 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\TeamController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\MatchController;
-use App\Http\Controllers\RoundController;
-use App\Http\Controllers\LeagueController;
-use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\AllPlayersController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\LeagueController;
+use App\Http\Controllers\LeagueListController;
+use App\Http\Controllers\MatchController;
+use App\Http\Controllers\RoundController;
+use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\TeamController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -94,10 +96,35 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/matches', [MatchController::class, 'index'])->name('matches.index');
         Route::get('/matches/data', [MatchController::class, 'data'])->name('matches.data');
         Route::get('/matches/create', [MatchController::class, 'create'])->name('matches.create');
-        Route::post('/matches/create', [MatchController::class, 'store'])->name('matches.store');
+        Route::post('/matches/store', [MatchController::class, 'store'])->name('matches.store');
         Route::get('/matches/edit/{id}/{language_id}/{default_language_post_id}', [MatchController::class, 'edit'])->name('matches.edit');
-        Route::get('/matches/add/{id}/{language_id}', [MatchController::class, 'addSubRound'])->name('sub-match.add');
+        Route::post('/matches/update/{id}/{language_id}/{default_language_post_id}', [MatchController::class, 'update'])->name('matches.update');
+        Route::get('/sub-match/add/{id}/{language_id}', [MatchController::class, 'addSubMatch'])->name('sub-match.add');
+        Route::post('/sub-match/store/{id}/{language_id}', [MatchController::class, 'storeSubMatch'])->name('sub-match.store');
         Route::post('/matches/delete', [MatchController::class, 'delete'])->name('matches.delete');
+
+        //League List
+        Route::get('/league-list', [LeagueListController::class, 'index'])->name('league-list.index');
+        Route::get('/league-list/data', [LeagueListController::class, 'data'])->name('league-list.data');
+        Route::get('/league-list/create', [LeagueListController::class, 'create'])->name('league-list.create');
+        Route::post('/league-list/store', [LeagueListController::class, 'store'])->name('league-list.store');
+        Route::get('/league-list/edit/{id}/{language_id}/{default_language_post_id}', [LeagueListController::class, 'edit'])->name('league-list.edit');
+        Route::post('/league-list/update/{id}/{language_id}/{default_language_post_id}', [LeagueListController::class, 'update'])->name('league-list.update');
+        Route::get('/sub-league-list/add/{id}/{language_id}', [LeagueListController::class, 'addSubLeagueList'])->name('sub-league-list.add');
+        Route::post('/sub-league-list/store/{id}/{language_id}', [LeagueListController::class, 'storeSubLeagueList'])->name('sub-league-list.store');
+        Route::post('/league-list/delete', [LeagueListController::class, 'delete'])->name('league-list.delete');
+
+        //All Players
+        Route::get('/all-players', [AllPlayersController::class, 'index'])->name('all-players.index');
+        Route::get('/all-players/data', [AllPlayersController::class, 'data'])->name('all-players.data');
+        Route::get('/all-players/create', [AllPlayersController::class, 'create'])->name('all-players.create');
+        Route::post('/all-players/store', [AllPlayersController::class, 'store'])->name('all-players.store');
+        Route::get('/all-players/edit/{id}/{language_id}/{default_language_post_id}', [AllPlayersController::class, 'edit'])->name('all-players.edit');
+        Route::post('/all-players/update/{id}/{language_id}/{default_language_post_id}', [AllPlayersController::class, 'update'])->name('all-players.update');
+        Route::get('/sub-all-players/add/{id}/{language_id}', [AllPlayersController::class, 'addSubAllPlayers'])->name('sub-all-players.add');
+        Route::post('/sub-all-players/store/{id}/{language_id}', [AllPlayersController::class, 'storeSubAllPlayers'])->name('sub-all-players.store');
+        Route::post('/all-players/delete', [AllPlayersController::class, 'delete'])->name('all-players.delete');
+
     });
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

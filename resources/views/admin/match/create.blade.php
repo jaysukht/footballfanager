@@ -562,7 +562,7 @@
 
                         <div class="channel-row d-flex gap-2 mb-2">
 
-                            <input type="text"
+                            <input type="number"
                                 class="form-control"
                                 name="channels[{{ $country->id }}][0][channel_id]"
                                 placeholder="Channel ID">
@@ -708,7 +708,7 @@ $(document).on("click", ".add-player", function () {
         <input type="hidden" name="players[${playerIndex}][team]" value="${team}">
         <input type="hidden" name="players[${playerIndex}][row_number]" value="${row}">
 
-        <input type="text" class="form-control"
+        <input type="number" class="form-control"
             name="players[${playerIndex}][player_id]"
             placeholder="Player ID">
 
@@ -720,7 +720,7 @@ $(document).on("click", ".add-player", function () {
             name="players[${playerIndex}][image]"
             placeholder="Image URL">
 
-        <input type="text" class="form-control"
+        <input type="number" class="form-control"
             name="players[${playerIndex}][number]"
             placeholder="Number">
 
@@ -813,7 +813,7 @@ $(document).on('click', '.add-channel', function () {
     let row = `
     <div class="channel-row d-flex gap-2 mb-2">
 
-        <input type="text"
+        <input type="number"
             class="form-control"
             name="channels[${country_id}][${index}][channel_id]"
             placeholder="Channel ID">

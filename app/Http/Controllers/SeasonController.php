@@ -27,7 +27,7 @@ class SeasonController extends Controller
             ->addColumn('action', function ($season) {
                 $editUrl = route('admin.seasons.edit', $season->id);
                 return '<a href="javascript:void(0)" data-deleteid="' . $season->id . '" class="btn btn-sm btn-danger show-remove-modal">Delete</a>
-                <a href="' . $editUrl . '" class="btn btn-sm btn-primary">Edit</a>';
+                <a href="' . $editUrl . '" class="btn btn-sm btn-primary orange-bg">Edit</a>';
             })
             ->rawColumns(['status','action'])
             ->make(true);

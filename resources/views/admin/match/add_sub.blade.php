@@ -6,7 +6,7 @@
     @if (session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
-    <form class="form-section formboxbg" id="form-league" method="POST" action="{{ route('admin.matches.update', [$match->id, $language_id, $default_language_post_id]) }}" enctype="multipart/form-data">
+    <form class="form-section formboxbg" id="form-league" method="POST" action="{{ route('admin.sub-match.store', [$match->id, $language_id]) }}" enctype="multipart/form-data">
         @csrf
         <div class="header-cls-disp">
             <div class="service-id-cls">

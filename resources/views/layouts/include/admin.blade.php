@@ -96,6 +96,18 @@
                                 <i class="bi bi-bar-chart "></i> Matches
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.league-list.index') }}"
+                                class="nav-link text-white{{ request()->is('admin/league-list*') ? ' active' : '' }}">
+                                <i class="bi bi-bar-chart "></i> All League List 
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.all-players.index') }}"
+                                class="nav-link text-white{{ request()->is('admin/all-players*') ? ' active' : '' }}">
+                                <i class="bi bi-bar-chart "></i> All Players 
+                            </a>
+                        </li>
                     </ul>
 
                 </div>
