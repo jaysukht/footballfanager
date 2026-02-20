@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AllPlayersController;
+use App\Http\Controllers\AllTeamPlayerController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\LeagueController;
@@ -137,7 +138,17 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/sub-stat-type/store/{id}/{language_id}', [StatTypeController::class, 'storeSubStatType'])->name('sub-stat-type.store');
         Route::post('/stat-type/delete', [StatTypeController::class, 'delete'])->name('stat-type.delete');
 
-
+        //All Team Player
+        Route::get('/all-team-player', [AllTeamPlayerController::class, 'index'])->name('all-team-player.index');
+        Route::get('/all-team-player/data', [AllTeamPlayerController::class, 'data'])->name('all-team-player.data');
+        Route::get('/all-team-player/create', [AllTeamPlayerController::class, 'create'])->name('all-team-player.create');
+        Route::post('/all-team-player/store', [AllTeamPlayerController::class, 'store'])->name('all-team-player.store');
+        Route::get('/all-team-player/edit/{id}/{language_id}/{default_language_post_id}', [AllTeamPlayerController::class, 'edit'])->name('all-team-player.edit');
+        Route::post('/all-team-player/update/{id}/{language_id}/{default_language_post_id}', [AllTeamPlayerController::class, 'update'])->name('all-team-player.update');
+        Route::get('/sub-all-team-player/add/{id}/{language_id}', [AllTeamPlayerController::class, 'addSubAllTeamPlayer'])->name('sub-all-team-player.add');
+        Route::post('/sub-all-team-player/store/{id}/{language_id}', [AllTeamPlayerController::class, 'storeSubAllTeamPlayer'])->name('sub-all-team-player.store');
+        Route::post('/all-team-player/delete', [AllTeamPlayerController::class, 'delete'])->name('all-team-player.delete');
+        
     });
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

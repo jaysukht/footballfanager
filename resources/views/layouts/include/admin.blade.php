@@ -114,6 +114,12 @@
                                 <i class="bi bi-bar-chart "></i> Stat Type 
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.all-team-player.index') }}"
+                                class="nav-link text-white{{ request()->is('admin/all-team-player*') ? ' active' : '' }}">
+                                <i class="bi bi-bar-chart "></i> All Team Player 
+                            </a>
+                        </li>
                     </ul>
 
                 </div>

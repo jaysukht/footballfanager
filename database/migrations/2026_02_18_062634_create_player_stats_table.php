@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->integer('all_team_player_id');
             $table->integer('stat_type_id');
-            $table->float('statistics_value');
-            $table->float('statistics_percentage');
-            $table->string('player_name');
-            $table->string('player_position');
-            $table->integer('player_id');
-            $table->string('player_image');
+            $table->string('statistics_value')->nullable();
+            $table->string('statistics_percentage')->nullable();
+            $table->string('player_name')->nullable();
+            $table->string('player_position')->nullable();
+            $table->integer('player_id')->nullable();
+            $table->string('player_image')->nullable();
             $table->integer('language_id');
             $table->timestamps();
         });

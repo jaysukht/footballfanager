@@ -168,6 +168,16 @@ class StatTypeController extends Controller
 
     public function delete(Request $request)
     {
-
+        try {
+            $id = $request->deleteid;
+            if($id)
+            {
+                StatType::where('id', $id)->orWhere('default_language_post_id', $id)->delete();
+                return response()->json(['status' => true, 'message' => 'Stat Type deleted successfully']);
+            }
+        }
+        catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => 'Failed to delete Stat Type']);
+        }
     }
 }
