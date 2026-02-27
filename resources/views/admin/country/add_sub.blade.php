@@ -28,9 +28,9 @@
                     @enderror
                 </div>
                 <div class="input-group">
-                    <label class="form-label">Slug : <span>*</span></label>
+                    <label class="form-label">Localized Name : <span>*</span></label>
                     <input type="text" class="form-control slug" id="slug" name="slug"
-                        value="{{ old('slug', $country->slug) }}" placeholder="Country Slug">
+                        value="{{ old('slug', $country->slug) }}" placeholder="Country Localized Name">
                     <span class="admin-error-msg country-slug-error">Please complete this field</span>
                     @error('slug')
                         <div class="text-danger">{{ $message }}</div>
@@ -46,9 +46,9 @@
                     @enderror
                 </div>
                 <div class="input-group">
-                    <label class="form-label">Custom Permalink :</label>
+                    <label class="form-label">Display Alias :</label>
                     <input type="text" class="form-control custom_permalink" id="custom_permalink"  name="custom_permalink"
-                        value="{{ old('custom_permalink', $country->custom_permalink) }}" placeholder="Custom Permalink">
+                        value="{{ old('custom_permalink', $country->custom_permalink) }}" placeholder="Display Alias">
                     @error('custom_permalink')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

@@ -6,7 +6,7 @@ type League {
     slug: String!
     custom_permalink: String
     visit: Int!
-    league_flag: String!
+    league_flag: String
     description: String
     status: Boolean!
     created_at: DateTime

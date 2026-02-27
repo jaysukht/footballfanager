@@ -1,0 +1,5 @@
+type Team {
+    id: ID
+    post_title: String
+    team_logo: String
+}

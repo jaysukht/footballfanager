@@ -1,0 +1,12 @@
+type MatchTeamLineUp {
+    id: ID!
+    row_number: ID!
+    team: ID
+    player_id: ID
+    name: String
+    image: String
+    pos: String
+    grid: String
+    created_at: String
+    updated_at: String
+}

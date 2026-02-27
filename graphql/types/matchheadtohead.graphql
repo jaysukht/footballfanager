@@ -1,0 +1,9 @@
+type MatchHeadToHead {
+    id:ID!
+    match_id:Int
+    goals:String
+    date:String
+    league: String
+    created_at: String
+    updated_at: String
+}

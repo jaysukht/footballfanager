@@ -35,9 +35,9 @@
                     @enderror
                 </div>
                 <div class="input-group">
-                    <label class="form-label">SLug : <span>*</span></label>
+                    <label class="form-label">Localized Name : <span>*</span></label>
                     <input type="text" class="form-control slug" id="slug" name="slug"
-                        value="{{ old('slug') }}" placeholder="Language Slug">
+                        value="{{ old('slug') }}" placeholder="Language Localized Name">
                     <span class="admin-error-msg language-slug-error">Please complete this field</span>
                     @error('slug')
                         <div class="text-danger">{{ $message }}</div>

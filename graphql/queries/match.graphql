@@ -1,0 +1,12 @@
+type Query {
+    matchesByFilter(
+        league_id: Int!
+        round_id: Int!
+        season_id: Int!
+    ): [Match!]!
+        @field(resolver: "App\\GraphQL\\Resolvers\\MatchResolver@byFilter")
+   matchDetail(id: ID!): Match   
+        @field(resolver: "App\\GraphQL\\Resolvers\\MatchResolver@matchDetail")
+   matchDetailByHomeAway(home_team_id: ID!, away_team_id: ID!): [Match!]!   
+        @field(resolver: "App\\GraphQL\\Resolvers\\MatchResolver@matchDetailByHomeAway")     
+}

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AllPlayersController;
+use App\Http\Controllers\AllRefereeController;
 use App\Http\Controllers\AllTeamPlayerController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
@@ -149,6 +150,18 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/sub-all-team-player/store/{id}/{language_id}', [AllTeamPlayerController::class, 'storeSubAllTeamPlayer'])->name('sub-all-team-player.store');
         Route::post('/all-team-player/delete', [AllTeamPlayerController::class, 'delete'])->name('all-team-player.delete');
         
+
+        // All Referee
+        Route::get('/all-referee', [AllRefereeController::class, 'index'])->name('all-referee.index');
+        Route::get('/all-referee/data', [AllRefereeController::class, 'data'])->name('all-referee.data');
+        Route::get('/all-referee/create', [AllRefereeController::class, 'create'])->name('all-referee.create');
+        Route::post('/all-referee/store', [AllRefereeController::class, 'store'])->name('all-referee.store');
+        Route::get('/all-referee/edit/{id}/{language_id}/{default_language_post_id}', [AllRefereeController::class, 'edit'])->name('all-referee.edit');
+        Route::post('/all-referee/update/{id}/{language_id}/{default_language_post_id}', [AllRefereeController::class, 'update'])->name('all-referee.update');
+        Route::get('/sub-all-referee/add/{id}/{language_id}', [AllRefereeController::class, 'addSubAllReferee'])->name('sub-all-referee.add');
+        Route::post('/sub-all-referee/store/{id}/{language_id}', [AllRefereeController::class, 'storeSubAllReferee'])->name('sub-all-referee.store');
+        Route::post('/all-referee/delete', [AllRefereeController::class, 'delete'])->name('all-referee.delete');
+
     });
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -1,0 +1,10 @@
+type MatchInjuredPlayer {
+    id:ID!
+    team:Int
+    match_team_injuries_player_name:String
+    match_team_injuries_position:String
+    match_team_injuries_injury_type: String
+    match_team_injuries_image: String
+    created_at: String
+    updated_at: String
+}

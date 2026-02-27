@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Cache;
 class League extends Model
 {
     //
@@ -21,5 +21,19 @@ class League extends Model
     public function country()
     {
         return $this->belongsTo(Country::class);
+    }
+    public function matches()
+    {
+        return $this->hasMany(Matches::class, 'league_id', 'id');   
+    }
+    protected static function booted()
+    {
+        static::saved(function () {
+            Cache::flush(); // clears all cache
+        });
+
+        static::deleted(function () {
+            Cache::flush();
+        });
     }
 }

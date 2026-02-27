@@ -42,6 +42,7 @@
                     <th>Title</th>
                     <th>League</th>
                     <th>Season</th>
+                    <th>Team</th>
                     <th>
                         @foreach ($languages as $language)
                             <img src="{{ asset('assets/images/language_flags/' . $language->lang_flag) }}" 
@@ -98,6 +99,10 @@
                     {
                         data: 'season_id',
                         name: 'season_id'
+                    },
+                    {
+                        data: 'team_id',
+                        name: 'team_id'
                     },
                     {
                         data: 'languages',

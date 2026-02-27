@@ -1,0 +1,4 @@
+extend type Query {
+    season: [Season!]!
+        @field(resolver: "App\\GraphQL\\Resolvers\\SeasonResolver@list")
+}

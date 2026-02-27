@@ -1,0 +1,42 @@
+type Match {
+    id: ID!
+    post_title: String
+    home_team_id: Int
+    away_team_id: Int
+    fixture_id: Int
+    divan_matchid: Int
+    divanscore_home_id: Int
+    divanscore_away_id: Int
+    divanscore_tournament_id: Int
+    divanscore_season_id: Int
+    match_date: String
+    match_time: String
+    referee_name: String
+    venue_name: String
+    city_name: String
+    match_result: String
+    match_homeresult: String
+    match_awayresult: String
+    match_team_players_team1_formation: String
+    match_team_players_team2_formation: String
+    country_id: Int
+    league_id: Int
+    round_id: Int
+    season_id: Int
+    language_id: Int
+    default_language_post_id: Int
+    created_at: String
+    updated_at: String
+
+    league: League @belongsTo
+    season: Season @belongsTo
+    round: round @belongsTo
+    homeTeam: Team @belongsTo
+    awayTeam: Team @belongsTo
+    match_team_lineups: [MatchTeamLineUp!]!
+        @hasMany 
+    match_injured_players: [MatchInjuredPlayer!]!
+        @hasMany   
+    match_head_to_heads: [MatchHeadToHead!]!
+        @hasMany
+}

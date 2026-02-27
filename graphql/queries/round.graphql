@@ -1,0 +1,4 @@
+extend type Query {
+    round: [Round!]!
+        @field(resolver: "App\\GraphQL\\Resolvers\\RoundResolver@list")
+}

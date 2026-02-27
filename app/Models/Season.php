@@ -9,4 +9,8 @@ class Season extends Model
     //
     protected $table = 'seasons';
     protected $guarded = [];
+    public function matches()
+    {
+        return $this->hasMany(Matches::class, 'season_id');
+    }
 }

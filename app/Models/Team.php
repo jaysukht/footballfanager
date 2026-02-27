@@ -25,5 +25,8 @@ class Team extends Model
     {
         return $this->belongsTo(Season::class, 'season_id', 'id');
     }
-
+    public function homeMatches()
+    {
+        return $this->hasMany(Matches::class, 'home_team_id');
+    }
 }

@@ -25,9 +25,9 @@
                     @enderror
                 </div>
                 <div class="input-group">
-                    <label class="form-label">Slug : <span>*</span></label>
+                    <label class="form-label">Localized Name : <span>*</span></label>
                     <input type="text" class="form-control slug" id="slug" name="slug"
-                        value="{{ old('slug', $round->slug) }}" placeholder="Round Slug">
+                        value="{{ old('slug', $round->slug) }}" placeholder="Round Localized Name">
                     @error('slug')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -51,9 +51,9 @@
                 </div>
 
                 <div class="input-group">
-                    <label class="form-label">Custom URI : <span>*</span></label>
+                    <label class="form-label">Display Alias : <span>*</span></label>
                     <input type="text" class="form-control slug" id="custom_uri" name="custom_uri"
-                        value="{{ old('custom_uri', $round->custom_uri) }}" placeholder="Custom URI">
+                        value="{{ old('custom_uri', $round->custom_uri) }}" placeholder="Display Alias">
                     @error('custom_uri')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

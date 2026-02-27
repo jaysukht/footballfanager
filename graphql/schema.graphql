@@ -4,3 +4,13 @@
 #import types/country.graphql
 #import queries/user.graphql
 #import queries/league.graphql
+#import queries/match.graphql
+#import types/match.graphql
+#import types/season.graphql
+#import queries/season.graphql
+#import types/team.graphql
+#import types/round.graphql
+#import queries/round.graphql
+#import types/matchteamlineup.graphql
+#import types/matchinjuredplayer.graphql
+#import types/matchheadtohead.graphql

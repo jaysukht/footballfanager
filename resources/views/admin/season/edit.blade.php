@@ -26,9 +26,9 @@
                 @enderror
             </div>
             <div class="input-group">
-                <label class="form-label">Slug : <span>*</span></label>
+                <label class="form-label">Localized Name : <span>*</span></label>
                 <input type="text" class="form-control slug" id="slug" name="slug"
-                    value="{{ old('slug', $season->slug) }}" placeholder="Season Slug">
+                    value="{{ old('slug', $season->slug) }}" placeholder="Season Localized Name">
                 <span class="admin-error-msg league-slug-error">Please complete this field</span>
                 @error('slug')
                     <div class="text-danger">{{ $message }}</div>

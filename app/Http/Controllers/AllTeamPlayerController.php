@@ -32,6 +32,9 @@ class AllTeamPlayerController extends Controller
         ->editColumn('season_id', function($all_team_player_list) {
             return $all_team_player_list->season ? $all_team_player_list->season->name : 'N/A';
         })
+        ->editColumn('team_id', function($all_team_player_list) {
+            return $all_team_player_list->team ? $all_team_player_list->team->post_title : 'N/A';
+        })
         ->addColumn('languages', function ($all_team_player_list) use ($languages) {
 
             $buttons = '';
@@ -305,6 +308,101 @@ class AllTeamPlayerController extends Controller
 
     public function storeSubAllTeamPlayer(Request $request, $id, $language_id)
     {
+        $statsFields = [
+            'goalsScored', 'goalsConceded', 'ownGoals', 'assists', 'shots', 'penaltyGoals', 
+            'penaltiesTaken', 'freeKickGoals', 'freeKickShots', 'goalsFromInsideTheBox', 
+            'goalsFromOutsideTheBox', 'shotsFromInsideTheBox', 'shotsFromOutsideTheBox', 
+            'headedGoals', 'leftFootGoals', 'rightFootGoals', 'bigChances', 'bigChancesCreated', 
+            'bigChancesMissed', 'shotsOnTarget', 'shotsOffTarget', 'blockedScoringAttempt', 
+            'successfulDribbles', 'dribbleAttempts', 'corners', 'hitWoodwork', 'fastBreaks', 
+            'fastBreakGoals', 'fastBreakShots', 'averageBallPossession', 'totalPasses', 
+            'accuratePasses', 'accuratePassesPercentage', 'totalOwnHalfPasses', 
+            'accurateOwnHalfPasses', 'accurateOwnHalfPassesPercentage', 'totalOppositionHalfPasses', 
+            'accurateOppositionHalfPasses', 'accurateOppositionHalfPassesPercentage', 
+            'totalLongBalls', 'accurateLongBalls', 'accurateLongBallsPercentage', 'totalCrosses', 
+            'accurateCrosses', 'accurateCrossesPercentage', 'cleanSheets', 'tackles', 
+            'interceptions', 'saves', 'errorsLeadingToGoal', 'errorsLeadingToShot', 
+            'penaltiesCommited', 'penaltyGoalsConceded', 'clearances', 'clearancesOffLine', 
+            'lastManTackles', 'totalDuels', 'duelsWon', 'duelsWonPercentage', 'totalGroundDuels', 
+            'groundDuelsWon', 'groundDuelsWonPercentage', 'totalAerialDuels', 'aerialDuelsWon', 
+            'aerialDuelsWonPercentage', 'possessionLost', 'offsides', 'fouls', 'yellowCards', 
+            'yellowRedCards', 'redCards', 'avgRating', 'accurateFinalThirdPassesAgainst', 
+            'accurateOppositionHalfPassesAgainst', 'accurateOwnHalfPassesAgainst', 
+            'accuratePassesAgainst', 'bigChancesAgainst', 'bigChancesCreatedAgainst', 
+            'bigChancesMissedAgainst', 'clearancesAgainst', 'cornersAgainst', 
+            'crossesSuccessfulAgainst', 'crossesTotalAgainst', 'dribbleAttemptsTotalAgainst', 
+            'dribbleAttemptsWonAgainst', 'errorsLeadingToGoalAgainst', 'errorsLeadingToShotAgainst', 
+            'hitWoodworkAgainst', 'interceptionsAgainst', 'keyPassesAgainst', 
+            'longBallsSuccessfulAgainst', 'longBallsTotalAgainst', 'offsidesAgainst', 
+            'redCardsAgainst', 'shotsAgainst', 'shotsBlockedAgainst', 'shotsFromInsideTheBoxAgainst', 
+            'shotsFromOutsideTheBoxAgainst', 'shotsOffTargetAgainst', 'shotsOnTargetAgainst', 
+            'blockedScoringAttemptAgainst', 'tacklesAgainst', 'totalFinalThirdPassesAgainst', 
+            'oppositionHalfPassesTotalAgainst', 'ownHalfPassesTotalAgainst', 'totalPassesAgainst', 
+            'yellowCardsAgainst', 'throwIns', 'goalKicks', 'ballRecovery', 'freeKicks', 
+            'matches', 'awardedMatches'
+        ];
 
+        $allFields = array_merge([
+            'post_title', 'season_id', 'league_id', 'team_id', 'language_id'
+        ], $statsFields);
+
+        $rules = [];
+        foreach ($allFields as $field) {
+            $rules[$field] = 'nullable|string|max:100'; 
+        }
+        $rules['post_title'] = 'required|string|max:255';
+        $rules['season_id'] = 'required';
+        $rules['league_id'] = 'required';
+        $rules['team_id'] = 'required';
+
+        $validatedData = $request->validate($rules);
+        $validatedData['language_id'] = $language_id;
+        $validatedData['default_language_post_id'] = $id;
+        $all_team_player = AllTeamPlayer::create($validatedData);
+
+        if ($request->has('top_player_stats')) {
+
+            foreach ($request->top_player_stats as $statTypeId => $stats) {
+
+                foreach ($stats as $stat) {
+
+                    // Skip completely empty rows
+                    if (empty($stat['value'])) {
+                        continue;
+                    }
+
+                    PlayerStat::create([
+                        'all_team_player_id' => $all_team_player->id,
+                        'stat_type_id' => $statTypeId,
+                        'statistics_value' => $stat['value'] ?? null,
+                        'statistics_percentage' => $stat['percentage'] ?? null,
+                        'player_name' => $stat['name'] ?? null,
+                        'player_position' => $stat['position'] ?? null,
+                        'player_id' => $stat['player_id'] ?? null,
+                        'player_image' => $stat['image'] ?? null,
+                        'language_id' => $language_id
+                    ]);
+                }
+            }
+        }
+
+        return redirect()->route('admin.all-team-player.index')->with('success', 'All Team Players Created Successfully');
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            $id = $request->deleteid;
+            $all_team_player = AllTeamPlayer::where('id', $id)->first();
+
+            if ($all_team_player) {
+                PlayerStat::where('all_team_player_id', $id)->delete();
+                $all_team_player->delete();
+                return response()->json(['status' => true, 'message' => 'All Team Player deleted successfully']);
+            } 
+
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => 'Failed to delete All Team Player']);
+        }
     }
 }

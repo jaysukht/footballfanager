@@ -120,6 +120,12 @@
                                 <i class="bi bi-bar-chart "></i> All Team Player 
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.all-referee.index') }}"
+                                class="nav-link text-white{{ request()->is('admin/all-referee*') ? ' active' : '' }}">
+                                <i class="bi bi-bar-chart "></i> All Referee 
+                            </a>
+                        </li>
                     </ul>
 
                 </div>
